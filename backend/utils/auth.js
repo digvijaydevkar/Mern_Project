@@ -4,7 +4,7 @@ const result = require('./result')
 
 function authUser(req, res, next){
     const path = req.url
-    if(path == '/auth/login')
+    if(path == '/auth/login'|| path =='/courses/all-active-courses' )
         next()
 
     else{
@@ -14,9 +14,9 @@ function authUser(req, res, next){
 
         else{
             try{
-                const paylod = jwt.verify(token, config.SECRET)
-                req.headers.uid = paylod.uid
-                req.headers.email = paylod.email
+                const payload = jwt.verify(token, config.SECRET)
+                req.headers.email = payload.email
+                req.headers.role = payload.role
                 next()
             }
             catch(e){
@@ -27,4 +27,15 @@ function authUser(req, res, next){
     }
 }
 
-module.exports = authUser
+
+function checkAuthorization(req, res, next) {
+    const role = req.headers.role
+    console.log("current user role: ", role);
+
+    if(role == "admin")
+        return next()
+
+    return res.send(result.createResult("Unauthorized Access"))
+}
+
+module.exports = {authUser, checkAuthorization}
