@@ -1,4 +1,4 @@
-const express=require("express");
+const express=require("express")
 const result=require("../utils/result")
 const pool=require("../db/pool")
 const crypto=require("crypto-js")
