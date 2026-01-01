@@ -1,5 +1,3 @@
-//student api page
-
 const express = require("express")
 const result = require("../utils/result")
 const pool = require("../db/pool")
