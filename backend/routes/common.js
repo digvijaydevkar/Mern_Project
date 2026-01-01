@@ -73,8 +73,10 @@ router.post('/auth/login', (req,res) => {
                 role : user.role
             }
             const token = jwt.sign(payload, config.SECRET)
+            const role = user.role
             const userData = {
-                token
+                token,
+                role
             }
 
             res.send(result.createResult(null, userData))
@@ -93,7 +95,6 @@ router.post('/auth/login', (req,res) => {
 
 router.get('/courses/all-active-courses', (req, res) => {
     const sql = 'SELECT * FROM courses ;'
-    console.log("🔥 ALL ACTIVE COURSES API HIT")
     pool.query(sql, (error,data) => {
         res.send(result.createResult(error, data))
     })

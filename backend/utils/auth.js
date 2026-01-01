@@ -18,9 +18,9 @@ function authUser(req, res, next) {
             // auth.js
             try {
                 const payload = jwt.verify(token, config.SECRET);
-                // Ensure these keys (email, role) match exactly what you put in the payload during login
                 req.headers.email = payload.email;
                 req.headers.role = payload.role;
+                console.log("Authenticated user: ", payload.email, " with role: ", payload.role);
                 next();
             } catch (e) {
                 res.send(result.createResult('Token is invalid'));
